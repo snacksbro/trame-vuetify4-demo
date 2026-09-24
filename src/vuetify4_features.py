@@ -140,17 +140,6 @@ class ProgressExample:
                     hide_details=True,
                 )
 
-                v4.VBtn(
-                    classes="mt-6",
-                    variant="tonal",
-                    color="primary",
-                    block=True,
-                    rounded="lg",
-                    append_icon="mdi-arrow-up",
-                    # @click="randomizeMigration"
-                    children="Ship another module",
-                )
-
 
 class HighlightExample:
     def __init__(self, app: Vuetify4FeaturesExample) -> None:
@@ -247,12 +236,19 @@ class DateRangePickerExample:
                         classes="text-body-large text-medium-emphasis mt-4",
                         children="Two synchronized picker panels, range selection, cross-panel navigation, and an optional independent-month mode.",
                     )
-                    # TODO: Figure this out, its computed
                     v4.VChip(
                         classes="mt-6",
                         variant="outlined",
                         size="small",
-                        children="{{ formatted_date_range }}",
+                        children=(
+                            (
+                                "{{ date_range.length < 2 ? 'Select a range' : "
+                                "`${date_range[0].toLocaleDateString("
+                                "'en-US', { year: 'numeric', month: 'short', day: 'numeric', }) } → "
+                                "${date_range.at(-1).toLocaleDateString("
+                                "'en-US', { year: 'numeric', month: 'short', day: 'numeric', }) }` }}"
+                            ),
+                        ),
                     )
 
                     v4.VSwitch(
@@ -367,6 +363,7 @@ class HeatmapExample:
 
                 with html.Div(classes="overflow-auto pb-2"):
                     v4.VHeatmap(
+                        classes="w-66",
                         items=("heatmap_items",),
                         rows=("week_rows",),
                         columns=("week_columns",),
@@ -392,6 +389,7 @@ class MonthPickerExample:
             rounded="xl",
             elevation="0",
             height="100%",
+            border=True,
         ):
             with html.Div(classes="pa-8"):
                 with html.Div(
