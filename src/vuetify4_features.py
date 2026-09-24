@@ -31,6 +31,7 @@ class Vuetify4FeaturesExample:
         self.date_range_picker_example = DateRangePickerExample(app=self)
         self.heatmap_example = HeatmapExample(app=self)
         self.month_picker_example = MonthPickerExample(app=self)
+        self.graduated_components = GraduatedLabsSection(app=self)
         self.hero = Hero(app=self)
         self.build_ui()
 
@@ -67,6 +68,8 @@ class Vuetify4FeaturesExample:
                                 self.highlight_example.build_ui()
                             with v4.VCol(cols=12, lg=5):
                                 self.progress_example.build_ui()
+                    with html.Section(classes="mt-16 pt-16"):
+                        self.graduated_components.build_ui()
 
 
 class ProgressExample:
@@ -417,6 +420,105 @@ class MonthPickerExample:
                     months_columns=3,
                     hide_header=True,
                 )
+
+
+class GraduatedLabsSection:
+    def __init__(self, app: Vuetify4FeaturesExample) -> None:
+        """Components that are no-longer in labs as of V4."""
+
+        self.state = app.state
+        self.state.graduated_components = [
+            {
+                "name": "VColorInput",
+                "value": "Structured color input without hand-rolling picker + field glue.",
+            },
+            {
+                "name": "VDateInput",
+                "value": "Date entry graduated from experimental API to normal core usage.",
+            },
+            {
+                "name": "VFileUpload",
+                "value": "A real upload surface instead of styling a file input yourself.",
+            },
+            {
+                "name": "VIconBtn",
+                "value": "Purpose-built icon buttons with consistent Vuetify behavior.",
+            },
+            {
+                "name": "VPicker",
+                "value": "Reusable picker infrastructure is now part of the core surface.",
+            },
+            {
+                "name": "VPullToRefresh",
+                "value": "Mobile refresh interactions without maintaining custom gestures.",
+            },
+            {
+                "name": "VStepperVertical",
+                "value": "Vertical workflows are now a first-class core component.",
+            },
+        ]
+
+    def build_ui(self) -> None:
+        with html.Div(
+            classes="d-flex flex-column flex-sm-row align-sm-end justify-space-between ga-4 mb-4"
+        ):
+            with html.Div():
+                html.Div(
+                    classes="text-label-small text-success text-uppercase font-weight-bold mb-3",
+                    children="Out of the lab",
+                )
+                html.H2(
+                    classes="text-display-small font-weight-bold",
+                    children="Experimental yesterday. Core today.",
+                )
+
+            v4.VChip(
+                color="success",
+                variant="tonal",
+                children="Stable surface",
+            )
+
+        html.P(
+            classes="text-body-large text-medium-emphasis mb-10",
+            children=(
+                "These existed in v3 as Labs components, so they aren't "
+                "technically v4-only. The upgrade still matters: v4 promotes "
+                "them into the normal component package."
+            ),
+        )
+
+        with v4.VRow():  # noqa: SIM117
+            with v4.VCol(
+                v_for=("component in graduated_components"),
+                key=("component", "name"),
+                cols="12",
+                md="6",
+            ):
+                with v4.VSheet(
+                    border=True,
+                    rounded="xl",
+                    color="surface",
+                    classes="pa-6 h-100",
+                ):
+                    with html.Div(classes="d-flex align-start ga-4"):
+                        with v4.VSheet(
+                            color="success",
+                            rounded="lg",
+                            width="36",
+                            height="36",
+                            classes="d-flex align-center justify-center flex-shrink-0",
+                        ):
+                            v4.VIcon(icon="mdi-check", size="small")
+
+                        with html.Div():
+                            html.Code(
+                                classes="text-title-medium",
+                                children="{{ component.name }}",
+                            )
+                            html.P(
+                                classes="text-body-medium text-medium-emphasis mt-2 mb-0",
+                                children="{{ component.value }}",
+                            )
 
 
 class Hero:
