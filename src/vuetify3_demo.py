@@ -1,4 +1,8 @@
-"""Example to verify Vuetify v3 functions normally with the v4 update."""
+"""Example to verify Vuetify v3 functions normally with the v4 update.
+
+This isn't meant to show off anything, just verifies that existing Trame
+projects using v3 lab aren't impacted by the v4 update.
+"""
 
 from __future__ import annotations
 
@@ -92,19 +96,12 @@ class TodoList:
                             children="Open Command Palette",
                         )
 
-                with v3.VList(classes="overflow-y-auto flex-grow-1"):
+                with v3.VList(classes="overflow-y-auto flex-grow-1"):  # noqa: SIM117
                     with v3.VListItem(
                         v_for=("(todo_item, index) in todo_list",),
                     ):
                         v3.VCheckbox(
-                            # Taken from the html.Span. Notice how this doesn't use `{{ todo_item }}` now, since `label` is
-                            # an attribute, not a child
                             label=("todo_item",),
-                            # Notice checked became this, since the v-model of a VCheckbox is the checked status
-                            # This is because the `Input` tag doesn't have to play double-duty in Vuetify, i.e. it
-                            # can tell that the v-model is a boolean since this can only be a checkbox and not a text field
-                            # Same reason why we don't specify `type` anymore
-                            # v_model=("selected_todo_indexes.includes(index)",),
                             model_value=("selected_todo_indexes.includes(index)",),
                             change=(
                                 self.on_todo_select,
@@ -142,7 +139,6 @@ class TodoList:
         print(f"Added new todo: {self.state.current_todo_text}")
         self.state.current_todo_text = ""
 
-        # This also needs a dirty due to me mutating the array in place
         self.state.dirty("todo_list")
 
     def remove_selected_todos(self) -> None:
@@ -152,8 +148,6 @@ class TodoList:
             if index not in self.state.selected_todo_indexes
         ]
 
-        # Notice how neither of these required a dirty, since I'm fully re-assigning the value
-        # A dirty wouldn't hurt anything by being here, it just wouldn't be needed
         self.state.todo_list = new_todos
         self.state.selected_todo_indexes = []
 
