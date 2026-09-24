@@ -7,6 +7,7 @@ as a testing ground to ensure Vuetify 3 still works.
 
 1. Ensure you have uv: `pip install uv`
 2. Install the dependencies: `uv sync`
+3. Install the [trame-vuetify fork](https://github.com/snacksbro/trame-vuetify), I personally just built the wheel and installed that into this repo
 
 ## Running
 

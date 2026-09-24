@@ -11,6 +11,3 @@ dependencies = [
   "trame-server>=3.10.0",
   "trame-vuetify>=4.0.0",
 ]
-
-[tool.uv.sources]
-trame-vuetify = { path = "../Clones/mine/trame-vuetify/dist/trame_vuetify-4.0.0-py3-none-any.whl" }
