@@ -1,0 +1,16 @@
+[project]
+name = "vuetify4-propaganda"
+version = "0.1.0"
+description = "Small project to show off the wonders of Vuetify v4"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+  "trame",
+  "trame-client>=3.10.2",
+  "trame-common>=1.1.1",
+  "trame-server>=3.10.0",
+  "trame-vuetify>=4.0.0",
+]
+
+[tool.uv.sources]
+trame-vuetify = { path = "../Clones/mine/trame-vuetify/dist/trame_vuetify-4.0.0-py3-none-any.whl" }
