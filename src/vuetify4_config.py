@@ -1,4 +1,12 @@
-"""Demo to show how to update a Vuetify 4 config file."""
+"""Demo to show how to use Vuetify 4 while preventing breaking changes.
+
+It should be noted that not all the migration workarounds mentioned in
+https://vuetifyjs.com/en/getting-started/upgrade-guide/ are possible here,
+due to some of them needing to occur at the Vite build step of the SCSS generation.
+
+The css layer served in this demo is lifted from the prior link to Vuetify's migration guide
+and reverts most, but not all, of the breaking changes from Vuetify 4 regarding styling.
+"""
 
 from __future__ import annotations
 
@@ -11,6 +19,9 @@ from trame.widgets import vuetify4 as v4
 from trame_server import Server
 
 resources_folder = Path(__file__).parent / "assets"
+
+# Toggle this to see a before/after applying the CSS to revert Vuetify 4's breaking changes
+USE_VUETIFY3_STYLES: Final[bool] = False
 
 VUETIFY3_OVERRIDES = {
     "defaults": {
@@ -33,8 +44,6 @@ VUETIFY3_OVERRIDES = {
         "defaultTheme": "light",
     },
 }
-
-USE_VUETIFY3_STYLES: Final[bool] = False
 
 
 class Vuetify4ConfigExample:
@@ -72,7 +81,6 @@ def serve_vuetify3_css_layer(server: Server | None) -> None:
                 "serve": {
                     "example": str(resources_folder),
                 },
-                # "scripts": ["example/index.js"],
                 "styles": ["example/vuetify3-reversion-layer.css"],
             },
         )
