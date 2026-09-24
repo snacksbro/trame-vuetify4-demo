@@ -42,8 +42,14 @@ class Vuetify4ConfigExample:
         self.server = cast("Server", get_server(None))
 
         if USE_VUETIFY3_STYLES:
-            self.server.state.trame__vuetify3_config = VUETIFY3_OVERRIDES
+            self.server.state.trame__vuetify4_config = VUETIFY3_OVERRIDES
             serve_vuetify3_css_layer(self.server)
+        else:
+            self.server.state.trame__vuetify3_config = {
+                "theme": {
+                    "defaultTheme": "dark",
+                },
+            }
 
         self.build_ui()
 
