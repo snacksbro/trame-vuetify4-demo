@@ -1,83 +1,71 @@
 from __future__ import annotations
 
+from typing import cast
+
 from trame.app import get_server
 from trame.decorators import TrameApp
 from trame.ui.vuetify4 import SinglePageLayout
 from trame.widgets import html
 from trame.widgets import vuetify4 as v4
+from trame_server import Server
 
 # Note: Some components in this example are exclusive to v4 labs, to ensure they're available:
 v4.enable_lab()
 
 
 @TrameApp()
-class DemoApp:
+class Vuetify4FeaturesExample:
     """Mini Trame app."""
 
     def __init__(self) -> None:
-        self.server = get_server(None)
+        self.server = cast("Server", get_server(None))
         self.state = self.server.state
 
-        self.my_component = MyComponent(app=self)
+        self.progress_example = ProgressExample(app=self)
+        self.highlight_example = HighlightExample(app=self)
+        self.date_range_picker_example = DateRangePickerExample(app=self)
+        self.heatmap_example = HeatmapExample(app=self)
+        self.month_picker_example = MonthPickerExample(app=self)
+        self.hero = Hero(app=self)
         self.build_ui()
 
     def build_ui(self) -> None:
-        with SinglePageLayout(self.server) as layout, layout.content:
-            self.my_component.build_ui()
-
-
-class MyComponent:
-    def __init__(self, app: DemoApp) -> None:
-        self.app = DemoApp
-        self.state = app.state
-
-        self.progress_example = ProgressExample(app=app)
-        self.highlight_example = HighlightExample(app=app)
-        self.date_range_picker_example = DateRangePickerExample(app=app)
-        self.heatmap_example = HeatmapExample(app=app)
-        self.month_picker_example = MonthPickerExample(app=app)
-        self.hero = Hero(app=app)
-
-        # Initialize it to 0
-        self.state.count = 0
-
-    def build_ui(self) -> None:
-        with v4.VSheet(color="background", classes="showcase-bg min-h-screen"):  # noqa: SIM117
-            with v4.VContainer(max_width="1320", classes="py-16"):
-                self.hero.build_ui()
-                with html.Section(classes="mt-16"):
-                    with html.Div(
-                        classes="d-flex flex-column flex-sm-row align-sm-end justify-space-between ga-4 mb-4"
-                    ):
-                        with html.Div():
-                            html.Div(
-                                classes="text-label-small text-primary text-uppercase font-weight-bold mb-3",
-                                children="Actually new",
+        with SinglePageLayout(self.server) as layout, layout.content:  # noqa: SIM117
+            with v4.VSheet(color="background", classes="showcase-bg min-h-screen"):
+                with v4.VContainer(max_width="1320", classes="py-16"):
+                    self.hero.build_ui()
+                    with html.Section(classes="mt-16"):
+                        with html.Div(
+                            classes="d-flex flex-column flex-sm-row align-sm-end justify-space-between ga-4 mb-4"
+                        ):
+                            with html.Div():
+                                html.Div(
+                                    classes="text-label-small text-primary text-uppercase font-weight-bold mb-3",
+                                    children="Actually new",
+                                )
+                                html.H2(children="Components v3.13 doesn't export")
+                            v4.VChip(
+                                color="warning", variant="tonal", children="Labs APIs"
                             )
-                            html.H2(children="Components v3.13 doesn't export")
-                        v4.VChip(color="warning", variant="tonal", children="Labs APIs")
-                    html.P(
-                        classes="text-body-large text-medium-emphasis mb-10",
-                        children="These aren't renamed v3 components. They're new component families available on the v4 side.",
-                    )
-                    self.date_range_picker_example.build_ui()
-                    with v4.VRow():
-                        with v4.VCol(cols=12, lg=5):
-                            self.month_picker_example.build_ui()
-                        with v4.VCol(cols=12, lg=7):
-                            self.heatmap_example.build_ui()
-                    with v4.VRow():
-                        with v4.VCol(cols=12, lg=7):
-                            self.highlight_example.build_ui()
-                        with v4.VCol(cols=12, lg=5):
-                            self.progress_example.build_ui()
-
-    def increment_counter(self) -> None:
-        self.state.count += 1
+                        html.P(
+                            classes="text-body-large text-medium-emphasis mb-10",
+                            children="These aren't renamed v3 components. They're new component families available on the v4 side.",
+                        )
+                        self.date_range_picker_example.build_ui()
+                        with v4.VRow():
+                            with v4.VCol(cols=12, lg=5):
+                                self.month_picker_example.build_ui()
+                            with v4.VCol(cols=12, lg=7):
+                                self.heatmap_example.build_ui()
+                        with v4.VRow():
+                            with v4.VCol(cols=12, lg=7):
+                                self.highlight_example.build_ui()
+                            with v4.VCol(cols=12, lg=5):
+                                self.progress_example.build_ui()
 
 
 class ProgressExample:
-    def __init__(self, app: DemoApp) -> None:
+    def __init__(self, app: Vuetify4FeaturesExample) -> None:
         """Progress."""
         self.state = app.state
 
@@ -160,7 +148,7 @@ class ProgressExample:
 
 
 class HighlightExample:
-    def __init__(self, app: DemoApp) -> None:
+    def __init__(self, app: Vuetify4FeaturesExample) -> None:
         """Highlight."""
         self.state = app.state
 
@@ -227,7 +215,7 @@ class HighlightExample:
 
 
 class DateRangePickerExample:
-    def __init__(self, app: DemoApp) -> None:
+    def __init__(self, app: Vuetify4FeaturesExample) -> None:
         """DateRangePicker."""
         self.state = app.state
 
@@ -286,7 +274,7 @@ class DateRangePickerExample:
 
 
 class HeatmapExample:
-    def __init__(self, app: DemoApp) -> None:
+    def __init__(self, app: Vuetify4FeaturesExample) -> None:
         """Heatmap."""
         self.state = app.state
 
@@ -384,7 +372,7 @@ class HeatmapExample:
 
 
 class MonthPickerExample:
-    def __init__(self, app: DemoApp) -> None:
+    def __init__(self, app: Vuetify4FeaturesExample) -> None:
         """MonthPicker."""
         self.state = app.state
 
@@ -426,7 +414,7 @@ class MonthPickerExample:
 
 
 class Hero:
-    def __init__(self, app: DemoApp) -> None:
+    def __init__(self, app: Vuetify4FeaturesExample) -> None:
         """Hero."""
         self.state = app.state
 
@@ -513,5 +501,5 @@ class Hero:
 
 
 if __name__ == "__main__":
-    app = DemoApp()
+    app = Vuetify4FeaturesExample()
     app.server.start()
