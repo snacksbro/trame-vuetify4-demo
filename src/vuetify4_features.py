@@ -1,3 +1,8 @@
+"""Demo to show off some of the new features present in Vuetify v4.
+
+These are all lab components for now, but notably they aren't available in v3 or v3 lab.
+"""
+
 from __future__ import annotations
 
 from typing import cast
@@ -9,7 +14,7 @@ from trame.widgets import html
 from trame.widgets import vuetify4 as v4
 from trame_server import Server
 
-# Note: Some components in this example are exclusive to v4 labs, to ensure they're available:
+# Note: The components in this example are exclusive to v4 labs, to ensure they're available:
 v4.enable_lab()
 
 
@@ -259,7 +264,9 @@ class DateRangePickerExample:
                     )
 
                 with v4.VCol(
-                    cols=12, lg=4, classes="stage-bg border-s-lg pa-6 overflow-auto"
+                    classes="stage-bg border-s-lg pa-6 overflow-auto flex-grow-1",
+                    cols=12,
+                    lg=4,
                 ):
                     with html.Div(classes="d-flex justify-end mb-4"):
                         v4.VChip(
@@ -270,6 +277,7 @@ class DateRangePickerExample:
                             v_model=("date_range",),
                             independent_months=("independent_months",),
                             color="primary",
+                            width="100%",
                         )
 
 
